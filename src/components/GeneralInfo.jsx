@@ -27,10 +27,10 @@ function GeneralInfo(){
             {isFormVisible?
                 (
                     <form action="" onSubmit={handleSubmit}>
-                        <input onChange={handleChange} value={general.firstName} name='firstName' type="text" placeholder={'ex: '+ initialValues.firstName}/>
-                        <input onChange={handleChange} value={general.lastName} name='lastName' type="text" placeholder={'ex: '+ initialValues.lastName}/>
-                        <input onChange={handleChange} value={general.email} name='email' type="email" placeholder={'ex: '+ initialValues.email}/>
-                        <input onChange={handleChange} value={general.phoneNumber} name='phoneNumber' type="tel" placeholder={'ex: '+ initialValues.phoneNumber}/>
+                        <input onChange={handleChange} value={general.firstName} name='firstName' type="text" />
+                        <input onChange={handleChange} value={general.lastName} name='lastName' type="text" />
+                        <input onChange={handleChange} value={general.email} name='email' type="email" />
+                        <input onChange={handleChange} value={general.phoneNumber} name='phoneNumber' type="tel"/>
                         <button type="submit">Save</button>
                     </form>
                 ):(
