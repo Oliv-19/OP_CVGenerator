@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Information from './components/Information'
+import Block from './components/Block'
 
 const initialValues={
   fullName:'FirstName lastName',
@@ -38,7 +39,7 @@ function App() {
   let idEdu= randomId()
   let idExp= randomId()
   const [educationList, setEducationList]= useState({[idEdu]:<Information object= {eduValues}/>})
-  const [experienceList, setExperienceList]= useState({[idExp]:<Information object= {expValues}/>})
+  const [experienceList, setExperienceList]= useState({[idExp]:<Block expValues= {expValues} mainResponsabilities={mainResponsabilities}/>})
   const handleChange = (comp, setFunction)=>{
       setFunction(prevFormData => ({
           ...prevFormData,
@@ -53,7 +54,7 @@ function App() {
       <section id='jobs'>
         <div className="header">
           <h2>Professional Experience: </h2>
-          <button onClick={()=>handleChange(<Information object= {expValues}/>, setExperienceList)}>Add</button>
+          <button onClick={()=>handleChange(<Block expValues= {expValues} mainResponsabilities={mainResponsabilities}/>, setExperienceList)}>Add</button>
 
         </div>
         {Object.entries(experienceList).map(([key, item])=> <div key={key}>{item}</div>)}

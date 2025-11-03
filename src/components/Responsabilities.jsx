@@ -1,12 +1,21 @@
-
-
-
-export default function Responsabilitieslist({object, isInput= false}){
-    const [obj, setObj]= useState(object)
+import { useState } from 'react'
+export default function Responsabilitieslist({object, isInput=true}){
     return(
         <div className="responabilities">
-            {Object.entries(responsabilities).map(([key, value])=> 
-                value.length!=0 && isInput? <input key={key} className={key} placeholder={value}/>:<li key={key}>{value}</li>)}
+            {isInput?(
+                <>
+                    {Object.entries(object).map(([key, value])=> 
+                        value && <input key={key} name={key} className={key} defaultValue={value} placeholder={value}/> 
+                    )}
+                    
+                </>
+                ):(
+                    <ul>
+                        {Object.entries(object).map(([key, value])=> value && <li key={key}>{value}</li> )}   
+                    </ul>
+                )
+                
+            }
         </div>
     
     )

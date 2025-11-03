@@ -2,10 +2,8 @@ import { useState } from 'react'
 import '../styles/general.css'
 import '../styles/experience.css'
 import '../styles/education.css'
+import Input from './Input'
 
-function Input({type, id, value}){
-    return (<input type={type} name={id} className={id} defaultValue={value}  placeholder={value}/>  )
-}
 export default function Information({object}){
     const [obj, setObj]= useState(object)
     const [isFormVisible, setIsFormVisible]= useState(true)
@@ -16,22 +14,25 @@ export default function Information({object}){
         const formObject = Object.fromEntries(form.entries())
         setObj(formObject)
     }
-    console.log(obj)
     return (
         <>{isFormVisible?(
-            <form action="" onSubmit={handleSubmit} className="displayExperience">
+            <form action="" onSubmit={handleSubmit} className="informationBlock">
                 <div className="firstLine">
-                    {Object.entries(obj).map(([key, value])=> <Input key={key} type='text' id={key} value={value} />)}
+                    {Object.entries(obj).map(([key, value])=> key != 'positionTitle' && <Input key={key} type='text' id={key} value={value} />)}
                     <button className='submitBtn' type="submit">Save</button>
                 </div>
+                {Object.hasOwn(obj, 'positionTitle') && <Input  type='text' id='positionTitle' value={obj.positionTitle} />}
             </form>
         ):(
+            <>
             <div className="firstLine">
                 {Object.entries(obj).map(([key, value])=>
-                    <h3 className={key} >{value}</h3>
+                    key != 'positionTitle' && <h3 className={key} >{value}</h3>
                 )}
                 <button className='editBtn' onClick={()=> setIsFormVisible(true)}>Edit</button>
             </div>
+            {Object.hasOwn(obj, 'positionTitle') && <h3 className='positionTitle' >{obj.positionTitle}</h3>}
+            </>
         )
         }
         </>
