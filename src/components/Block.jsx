@@ -1,6 +1,7 @@
 import Responsabilitieslist from './Responsabilities'
 import { useState } from 'react'
 import Input from './Input'
+import { format } from "date-fns";
 
 export default function Block({expValues, mainResponsabilities}) {
     const [obj, setObj]= useState(expValues)
@@ -11,16 +12,14 @@ export default function Block({expValues, mainResponsabilities}) {
         setIsFormVisible(false)
         const form = new FormData(e.target)
         const formObject = Object.fromEntries(form.entries())
-
         const  {companyName, expLocation, startDate, endDate, positionTitle}= formObject
-        const companyObj = {companyName, expLocation, startDate, endDate, positionTitle}
-
+        const companyObj = {companyName, expLocation,startDate, endDate, positionTitle}
         const {res1, res2, res3, res4, res5}= formObject
         const resObj = {res1, res2, res3, res4, res5}
         setObj(companyObj)
         setResponsabilities(resObj)
     }
-    console.log(obj)
+    
     return (
         <>{isFormVisible?(
             <form action="" onSubmit={handleSubmit} className="informationBlock">
@@ -38,8 +37,13 @@ export default function Block({expValues, mainResponsabilities}) {
             <>
             <div className="firstLine">
                 {Object.entries(obj).map(([key, value])=>{
-                    if(key != 'positionTitle' && key != 'mainResponsabilities')
-                    return <h3 key={key} className={key} >{value}</h3>
+                    if(key.includes('Date')){
+                        let dateValue = format(new Date(value+ "- 01"), 'MMM, y');
+                        return <h3 className={key} key={key} >{dateValue}</h3>   
+                    }
+                    if(key != 'positionTitle' && key != 'mainResponsabilities'){
+                        return <h3 className={key} key={key} >{value}</h3>   
+                    }
                 })}
                 <button className='editBtn' onClick={()=> setIsFormVisible(true)}>Edit</button>
             </div>

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import './App.css'
+import './styles/app.css'
 import Information from './components/Information'
 import Block from './components/Block'
+
 
 const initialValues={
   fullName:'FirstName lastName',
@@ -12,8 +13,8 @@ const initialValues={
 const expValues= {
   companyName:'Company',
   expLocation:'city, country',
-  startDate:'sep 2018',
-  endDate:'jul 2024',
+  startDate:'2018-01',
+  endDate:'2024-06',
   positionTitle:'Position',
 }
 const mainResponsabilities={
@@ -26,8 +27,8 @@ const mainResponsabilities={
 const eduValues={
   school:'School',
   eduLocation:'city, country',
-  startDate:'sep 2018',
-  endDate:'jul 2024',
+  startDate:'2018-01',
+  endDate:'2024-06',
   degree:'Degree',
 }
 
@@ -38,7 +39,7 @@ function App() {
   
   let idEdu= randomId()
   let idExp= randomId()
-  const [educationList, setEducationList]= useState({[idEdu]:<Information object= {eduValues}/>})
+  const [educationList, setEducationList]= useState({[idEdu]:<Information object= {eduValues} id='eduValues'/>})
   const [experienceList, setExperienceList]= useState({[idExp]:<Block expValues= {expValues} mainResponsabilities={mainResponsabilities}/>})
   const handleChange = (comp, setFunction)=>{
       setFunction(prevFormData => ({
@@ -47,14 +48,14 @@ function App() {
       }))
   }
   return(
-    <>
+    <main>
       <section id='personalInformation'>
-        <Information object={initialValues}></Information>
+        <Information object={initialValues} id='generalInfo' />
       </section>
       <section id='jobs'>
         <div className="header">
           <h2>Professional Experience: </h2>
-          <button onClick={()=>handleChange(<Block expValues= {expValues} mainResponsabilities={mainResponsabilities}/>, setExperienceList)}>Add</button>
+          <button onClick={()=>handleChange(<Block expValues= {expValues} mainResponsabilities={mainResponsabilities}/>, setExperienceList)}>+</button>
 
         </div>
         {Object.entries(experienceList).map(([key, item])=> <div key={key}>{item}</div>)}
@@ -62,11 +63,11 @@ function App() {
       <section id='school'>
         <div className="header">
           <h2>Education: </h2>
-          <button onClick={()=>handleChange(<Information object= {eduValues}/>, setEducationList)}>Add</button>
+          <button onClick={()=>handleChange(<Information object= {eduValues} id='eduValues'/>, setEducationList)}>+</button>
         </div>
         {Object.entries(educationList).map(([key, item])=> <div key={key}>{item}</div>)}
       </section>
-    </>
+    </main>
   )
 }
 

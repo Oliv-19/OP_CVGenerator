@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import '../styles/general.css'
-import '../styles/experience.css'
-import '../styles/education.css'
 import Input from './Input'
+import { format } from "date-fns";
 
-export default function Information({object}){
+export default function Information({object, id}){
     const [obj, setObj]= useState(object)
     const [isFormVisible, setIsFormVisible]= useState(true)
     const handleSubmit = (e)=>{
@@ -17,21 +15,29 @@ export default function Information({object}){
     return (
         <>{isFormVisible?(
             <form action="" onSubmit={handleSubmit} className="informationBlock">
-                <div className="firstLine">
-                    {Object.entries(obj).map(([key, value])=> key != 'positionTitle' && <Input key={key} type='text' id={key} value={value} />)}
+                <div className="firstLine" id={id}>
+                    {Object.entries(obj).map(([key, value])=> key != 'degree' && <Input key={key} type='text' id={key} value={value} />)}
                     <button className='submitBtn' type="submit">Save</button>
                 </div>
-                {Object.hasOwn(obj, 'positionTitle') && <Input  type='text' id='positionTitle' value={obj.positionTitle} />}
+                {Object.hasOwn(obj, 'degree') && <Input  type='text' id='degree' value={obj.degree} />}
             </form>
         ):(
             <>
-            <div className="firstLine">
-                {Object.entries(obj).map(([key, value])=>
-                    key != 'positionTitle' && <h3 className={key} >{value}</h3>
+            <div className="firstLine" id={id}>
+                {Object.entries(obj).map(([key, value])=>{
+                    if(key.includes('Date')){
+                        let dateValue = format(new Date(value+ "- 01"), 'MMM, y');
+                        return <h3 className={key} key={key} >{dateValue}</h3>   
+                    }
+                    if(key != 'degree'){
+                        return <h3 className={key} key={key} >{value}</h3>   
+                    }
+
+                }
                 )}
                 <button className='editBtn' onClick={()=> setIsFormVisible(true)}>Edit</button>
             </div>
-            {Object.hasOwn(obj, 'positionTitle') && <h3 className='positionTitle' >{obj.positionTitle}</h3>}
+            {Object.hasOwn(obj, 'degree') && <h3 className='degree' >{obj.degree}</h3>}
             </>
         )
         }
